@@ -3,13 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit5TestClass.java to edit this template
  */
 
-import com.mycompany.quickchat.Login;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
+import com.mycompany.quickchat.Login;
 
 /**
  *
@@ -78,11 +77,35 @@ public class LoginTest {
         assertFalse(login.checkCellPhoneNumber("083896897"));
     }
     
+    @Test
+    public void testRegisterUser_Success() {
+       String result = login.registerUser("Anam","Selekane","kyl_1","Ch&&@ke99!", "+2796489328");
+       assertEquals("User registered successfully",result);
+    }
+
+     @Test
+     public void testRegisterUser_InvalidUsername()  {
+         String result = login.registerUser("Anam","Selekane","ky11","Ch&&@ke99!","+27796489328");
+         assertTrue(result.contains("Username is not correctly formatted"));
+     }
+     
+     
+     @Test
+     public void testRegisterUser_InvalidPassword()  {
+         String result = login.registerUser("Anam","Selekane","kyl_1","pass","+27796489328");
+         assertTrue(result.contains("Password is not correctly formatted"));
+     }
+     
+     @Test
+     public void testRegisterUser_InvalidPhone() {
+         String result = login.registerUser("Anam","Selekane","kyl_1","Ch&&@ke99!","0796489328");
+         assertTrue(result.contains("Cell phone number incorrectly formatted"));
+     }
 
     @Test
     public void testLoginSuccess()  {
         // Registering with correct details
-        login.registerUser("kyl_1","Ch&&sec@ke99!","+27838968976");
+        login.registerUser("Anam","Selekane","kyl_1","Ch&&sec@ke99!","+27838968976");
         assertTrue(login.loginUser("kyl_1", "Ch&&sec@ke99!"));
     }
     

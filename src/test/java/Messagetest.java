@@ -28,6 +28,15 @@ public class Messagetest {
         message1.setMessageText("Hi Mike, can you join us for dinner tonight?");
         message1.setRecipient("+27718693002");
 
+        // ensure message1 is in static lists for search/delete tests
+        message1.generateMessageID();
+        message1.setNumMessages(1);
+        message1.setMessageHash(message1.createMessageHash());
+        Message.getSentMessages().add(message1.getMessageText());
+        Message.getMessageIDs().add(message1.getMessageID());
+        Message.getMessageHashes().add(message1.getMessageHash());
+        Message.getRecipientList().add(message1.getRecipient());
+
         message2 = new Message();
         message2.setMessageText("Hi Keegan, did you receive the payment?");
         message2.setRecipient("08575975889"); // invalid
@@ -122,5 +131,101 @@ public class Messagetest {
         String result = message1.sentMessage(3);
         assertEquals("Message successfully stored.", result);
     }
+    // =====================================================
+    // PART 3 TEST 1
+    // =====================================================
 
+    @Test
+    public void testSentMessagesArrayCorrectlyPopulated() {
+
+        assertTrue(
+                Message.getSentMessages()
+                        .contains("Did you get the cake?")
+        );
+
+        assertTrue(
+                Message.getSentMessages()
+                        .contains("It is dinner time!")
+        );
+    }
+
+    // =====================================================
+    // PART 3 TEST 2
+    // =====================================================
+
+    @Test
+    public void testDisplayLongestMessageReturnsCorrectMessage() {
+
+        Message.getStoredMessages().clear();
+
+        Message.getStoredMessages().add(
+                "Did you get the cake?"
+        );
+
+        Message.getStoredMessages().add(
+                "Where are you? You are late! I have asked you to be on time."
+        );
+
+        Message.getStoredMessages().add(
+                "Ok, I am leaving without you."
+        );
+
+        assertEquals(
+                "Where are you? You are late! I have asked you to be on time.",
+                Message.displayLongestMessage()
+        );
+    }
+
+    // =====================================================
+    // PART 3 TEST 3
+    // =====================================================
+
+    @Test
+    public void testSearchByMessageIDReturnsMessage() {
+        String id = message1.getMessageID();
+        String result = Message.searchByMessageID(id);
+        assertNotNull(result);
+        assertFalse(result.isEmpty());
+    }
+
+    // =====================================================
+    // PART 3 TEST 4
+    // =====================================================
+
+    @Test
+    public void testSearchByRecipientReturnsMatchingMessages() {
+
+        String result = Message.searchByRecipient("+27838884567" );
+
+        assertNotNull(result);
+        assertFalse(result.isEmpty());
+    }
+
+    // =====================================================
+    // PART 3 TEST 5
+    // =====================================================
+
+    @Test
+    public void testDeleteByHashRemovesMessage() {
+        String hash = message1.getMessageHash();
+        String result = Message.deleteByHash(hash);
+        assertTrue(result.contains("successfully deleted"));
+    }
+
+    // =====================================================
+    // PART 3 TEST 6
+    // =====================================================
+
+    @Test
+    public void testDisplayReportContainsRequiredFields() {
+
+        String report = Message.printMessagesReport();
+
+        assertTrue( report.contains("Message Hash"));
+
+        assertTrue(report.contains("Recipient") );
+
+        assertTrue(report.contains("Message"));
+    }
 }
+

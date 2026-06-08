@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: LoginTest
+-------------------------------------------------------------------------------
+Tests run: 10, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.094 s <<< FAILURE! -- in LoginTest
+LoginTest.testLoginFail -- Time elapsed: 0.008 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because "this.username" is null
+	at com.mycompany.quickchat.Login.loginUser(Login.java:119)
+	at LoginTest.testLoginFail(LoginTest.java:96)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
