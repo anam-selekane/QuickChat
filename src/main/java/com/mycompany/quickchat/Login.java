@@ -18,6 +18,9 @@ public class Login {
     String password;
     String phoneNumber;
     
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
     
     //-----------------------------------------------------
     //1. USERNAME
@@ -110,13 +113,20 @@ public class Login {
            
            //When they all return true,print out the feedback
            
-           return"User registered successfully.";
+           return "User registered successfully";
+       }
+           
+       public String registerUser(String firstName, String lastName, String username, String password, String phoneNumber) {
+           return registerUser(username, password, phoneNumber);
        }
            
            //The program must allow the user to log in using the same details they used to register with 
    
     public boolean loginUser(String username,String password)  {
-               return this.username.equals(username)&& this.password.equals(password);
+               if (this.username == null || this.password == null) {
+                   return false;
+               }
+               return this.username.equals(username) && this.password.equals(password);
            }
                
         public String returnLoginStatus(boolean success) {

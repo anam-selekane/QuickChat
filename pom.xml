@@ -48,6 +48,20 @@
             <version>1.1</version>
             <type>jar</type>
         </dependency>
+        <dependency>
+            <groupId>com.avito.android</groupId>
+            <artifactId>result</artifactId>
+            <version>2023.22</version>
+            <scope>test</scope>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>io.github.cn-luyang</groupId>
+            <artifactId>luyang-framework-common</artifactId>
+            <version>1.0.1</version>
+            <scope>test</scope>
+            <type>jar</type>
+        </dependency>
     </dependencies>
             
   
