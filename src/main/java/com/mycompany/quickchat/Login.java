@@ -116,12 +116,15 @@ public class Login {
            //The program must allow the user to log in using the same details they used to register with 
    
     public boolean loginUser(String username,String password)  {
-               return this.username.equals(username)&& this.password.equals(password);
+               if (this.username == null || this.password == null) {
+                   return false;
+               }
+               return this.username.equals(username) && this.password.equals(password);
            }
                
         public String returnLoginStatus(boolean success) {
              if(success){
-                 return "Welcome"+username +" it is nice to see you again.";
+                 return "Welcome " + username + " it is nice to see you again.";
             } else {
                  return "Username or password incorrect, please try again.";
             }

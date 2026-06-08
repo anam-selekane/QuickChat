@@ -89,10 +89,10 @@ public class LoginTest {
     // Testing log in fail
     @Test
     public void testLoginFail() {
-        
-        login.registerUser("kyle!!!!!!!", "ch&&sec@ke99!", "+27838968976");
-        
-        // entering wrong details
+        String registerResult = login.registerUser("kyle!!!!!!!", "ch&&sec@ke99!", "+27838968976");
+        assertEquals("Username is not correctly formatted;please ensure that the paasword contains an underscore and is no more than 5 characters in length.", registerResult);
+
+        // entering wrong details after failed registration must still fail safely
         assertFalse(login.loginUser("kyle!!!!!!!", "password"));
     }
 }
