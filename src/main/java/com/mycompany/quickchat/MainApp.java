@@ -16,6 +16,9 @@ public class MainApp {
         Scanner input = new Scanner(System.in);
         Login login = new Login();
 
+        System.out.println("\n=== WELCOME TO QUICKCHAT ===");
+        
+        
         System.out.println("=== USER REGISTRATION ===");
         System.out.print("Enter your firstname: ");
         String firstname = input.nextLine();
@@ -72,14 +75,14 @@ public class MainApp {
         System.out.println(login.returnLoginStatus(loggedIn));
 
         if (loggedIn) {
-            System.out.println("\n=== WELCOME TO QUICKCHAT ===");
+            System.out.println("WELCOME TO QUICKCHAT");
             boolean running = true;
             while (running) {
                 System.out.println("\n== CHAT MENU ==");
                 System.out.println("1. Send messages");
                 System.out.println("2. Show recently sent messages");
-                System.out.println("3.Quit");
-                System.out.println("4.Stored messages");
+                System.out.println("3. Quit");
+                System.out.println("4. Stored messages");
                 System.out.print("Choose an option: ");
                 String choiceLine = input.nextLine();
                 int choice;
@@ -121,15 +124,25 @@ public class MainApp {
                                 continue;
                             }
                             System.out.println("Message ready to send");
-                            String result = msg.sentMessage();
+
+                            System.out.print("Store this message in QuickChat? (y/n): ");
+                            String storeChoice = input.nextLine().trim().toLowerCase();
+                            String result;
+                            if (storeChoice.startsWith("y")) {
+                                result = msg.sentMessage(3);
+                            } else {
+                                result = msg.sentMessage();
+                            }
+
                             System.out.println(result);
                             System.out.println(msg.printMessage());
                         }
                         break;
-                        
                     case 2:
-                        System.out.println("Coming Soon");
-                        
+                        System.out.println("=== Recently sent messages ===");
+                        for (String sent : Message.getSentMessages()) {
+                            System.out.println(sent);
+                        }
                         break;
                     case 3:
                         System.out.println("Exiting Quickchat");
@@ -137,6 +150,7 @@ public class MainApp {
                         break;
                        
                     case 4:
+                        Message.loadStoredMessages();
                         System.out.println("4. Stored Messages");
                         System.out.println("a) Display all stored messages");
                         System.out.println("b) Display longest Message");
@@ -144,6 +158,7 @@ public class MainApp {
                         System.out.println("d) Search by recipient");
                         System.out.println("e) Delete by Message Hash");
                         System.out.println("f) Display full report");
+                        System.out.println("g) Return to the main menu");
 
                         String rawChoice = input.hasNextLine() ? input.nextLine().trim().toLowerCase() : "";
                         char subChoice = rawChoice.isEmpty() ? '\0' : rawChoice.charAt(0);
@@ -180,27 +195,24 @@ public class MainApp {
                                 System.out.println("f) Display full report");
                                 System.out.println(Message.printMessagesReport());
                                 break;
-
+                            case 'g':
+                                System.out.println("g) Return to the main menu");
+                                break;
                             default:
                                 System.out.println("Invalid choice. Please try again");
                                 break;
                         }
-               
-                
             }
             }
             
-            } else {
-        
+        } else {
             System.out.println("Login failed.");
         }
 
         input.close();
-        }
     }
+}
 
-
-    
 
 
 
